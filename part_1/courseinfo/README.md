@@ -1,0 +1,2 @@
+CourseInfo Exercise
+for FullStackOpen
