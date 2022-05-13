@@ -21,18 +21,12 @@ const App = () => {
     setSelected(Math.floor(Math.random() * anecdotes.length))
   }
   const voteAnecHandler = () =>{
+    //one vote up
     const copy = { ...selectedPoints}
     copy[selected] += 1;
     setSelectedPoints(copy)
-    console.log(selectedPoints, 'selectedPoints')
-    console.log(selectedPoints[selected],'selectedPointsp[selected]')
-    console.log(copy,'copy')
-    console.log(selected, 'selected')
-    console.log(typeof(selectedPoints))
-    if(copy[selected] > mostVoted){
-      setMostVoted(selected)
-    }
 
+    //checking for most voted
     Object.values(copy).forEach(element => {
         if(element > mostVoted.votes){
           const copymv = {...mostVoted ,index:selected,votes:element}
@@ -63,9 +57,7 @@ const Button = ({handleClick, text}) =>{
 }
 const Title = ({title}) =>{
   return(
-    <div>
-      <h1>{title}</h1>
-    </div>
+    <h1>{title}</h1>
   )  
 }
 
