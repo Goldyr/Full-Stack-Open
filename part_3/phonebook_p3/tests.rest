@@ -1,10 +1,27 @@
 GET http://localhost:3001/api/persons
 
 ###
+GET https://secret-hamlet-52509.herokuapp.com/api/persons
+
+###
 GET http://localhost:3001/api/persons/1
 
 ###
+GET https://secret-hamlet-52509.herokuapp.com/api/persons/2
+
+###
 DELETE http://localhost:3001/api/persons/1
+###
+DELETE https://secret-hamlet-52509.herokuapp.com/api/persons/2
+
+###
+POST https://secret-hamlet-52509.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+    "name" : "NameTest",
+    "number": "NumberTest"
+}
 
 ###
 POST http://localhost:3001/api/persons
