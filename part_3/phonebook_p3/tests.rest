@@ -4,7 +4,7 @@ GET http://localhost:3001/api/persons
 GET https://secret-hamlet-52509.herokuapp.com/api/persons
 
 ###
-GET http://localhost:3001/api/persons/1
+GET http://localhost:3001/api/persons/628fc6ea5c2bd115f3a0ba5c
 
 ###
 GET https://secret-hamlet-52509.herokuapp.com/api/persons/2
@@ -28,6 +28,16 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name" : "NameTest",
-    "number": "NumberTest"
+    "name" : "1 Wrong Number",
+    "number": "223-11112222"
 }
+
+###
+PUT http://localhost:3001/api/persons/6296759dfe86b4e3a6cde5b0
+Content-Type: application/json
+
+{
+    "number": "12-1234567"
+}
+###
+GET http://localhost:3001/api/persons/62964bd0d06c1a3e249554e7

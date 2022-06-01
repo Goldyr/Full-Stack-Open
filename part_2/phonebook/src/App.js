@@ -66,7 +66,6 @@ const App = () => {
     let newPerson = {
       name: newName,
       number: newNumber,
-      id:persons.length +1 
     }
 
     personsServices
@@ -82,6 +81,18 @@ const App = () => {
       setTimeout(()=>{
         setNotUpdate(null)
       },5000)
+    })
+    .catch(error => {
+      console.log(error.response.data)
+      setNotUpdate(
+        `ERROR: ${error.response.data.error}`
+      )
+      setNewName('')
+      setNewNumber('')
+      setTimeout(()=>{
+        setNotUpdate(null)
+      },5000)
+      return
     })
   }
 
