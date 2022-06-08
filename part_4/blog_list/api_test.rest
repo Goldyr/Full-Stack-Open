@@ -1,0 +1,12 @@
+GET http://localhost:3003/api/blogs
+
+###
+POST http://localhost:3003/api/blogs
+content-type: application/json
+
+{
+    "title": "titulo-blog",
+    "author": "enzo",
+    "url": "google.com",
+    "likes": 1
+}
