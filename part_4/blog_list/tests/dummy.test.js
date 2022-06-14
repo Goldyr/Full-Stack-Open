@@ -84,8 +84,7 @@ describe('Author with the most blogs', () => {
       url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
       likes: 1,
       __v: 0
-    }
-    ,
+    },
     {
       _id: '4',
       title: 'Go To Stmful',
@@ -127,8 +126,7 @@ describe('Author with the most likes (total)', () => {
       url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
       likes: 5,
       __v: 0
-    }
-    ,
+    },
     {
       _id: '4',
       title: 'Go To Stmful',
@@ -141,9 +139,7 @@ describe('Author with the most likes (total)', () => {
 
   test('most liked blogs', () => {
     const result = listHelper.mostLikesTotal(listWithThreeBlogs)
-    console.log(result);
+    console.log(result)
     expect(result.likes).toEqual(30)
   })
 })
-
-

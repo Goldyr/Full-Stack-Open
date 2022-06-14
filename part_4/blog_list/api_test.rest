@@ -1,3 +1,4 @@
+### BLOGS
 GET http://localhost:3003/api/blogs
 
 ###
@@ -8,5 +9,30 @@ content-type: application/json
     "title": "titulo-blog",
     "author": "enzo",
     "url": "google.com",
-    "likes": 1
+    "likes": 15
+}
+
+### USERS
+GET http://localhost:3003/api/users
+
+###
+POST http://localhost:3003/api/users
+content-type: application/json
+
+{
+    "username": "otrouser",
+    "name": "othername",
+    "password": "otherpassword"
+}
+
+###
+POST http://localhost:3003/api/blogs
+content-type: application/json
+
+{
+    "title": "title-1241241",
+    "author": "Hugo Couto",
+    "url": "1234.com",
+    "likes": 25,
+    "userId": "62a912ce55e1692a5e26f7cc" 
 }
