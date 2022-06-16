@@ -1,6 +1,8 @@
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
+const logInToken = undefined
+
 const initialBlogs = [
   {
     title: 'Dummy blog #1',
@@ -32,6 +34,8 @@ const usersInDb = async () => {
   return users.map(u => u.toJSON())
 }
 
+// const tokenLogIn()
+
 module.exports = {
-  initialBlogs, blogsInDb, usersInDb
+  initialBlogs, blogsInDb, usersInDb, logInToken
 }

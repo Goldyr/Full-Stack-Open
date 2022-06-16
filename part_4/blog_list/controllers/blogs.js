@@ -1,13 +1,15 @@
 const blogsRouter = require('express').Router()
-const { default: mongoose } = require('mongoose')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 const logger = require('../utils/logger')
+const jwt = require('jsonwebtoken')
+const config = require('../utils/config')
+const middleware = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response) => {
   try {
-    const blogs = await Blog.find({}).populate('user', {username:1 , name:1, id:1, })
-    response.json(blogs)
+    const blogs = await Blog.find({}).populate('user', { username: 1, name: 1, id: 1 })
+    return response.json(blogs)
   } catch (error) {
     logger.error(error)
   }
@@ -15,15 +17,23 @@ blogsRouter.get('/', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
   const body = request.body
+  if (!request.token) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
   try {
+    const decodedToken = jwt.verify(request.token, config.SECRET)
 
-    if(!body.userId){
-      response.status(401).json({error: 'userId missing or invalid'})
+    if (!decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid' })
     }
-    const user = await User.findOne({_id: body.userId})
-    
-    if(!user){
-      response.status(401).json({error: 'userId invalid'})
+
+    const user = await User.findOne({ _id: decodedToken.id })
+
+    if (!user) {
+      return response.status(401).json({ error: 'token invalid' })
+    }
+    if (!body.title || !body.url) {
+      return response.status(400).json({ error: 'missing title or url' })
     }
     const blog = new Blog({
       title: body.title,
@@ -34,26 +44,32 @@ blogsRouter.post('/', async (request, response) => {
     })
     const result = await blog.save()
     user.blogs = user.blogs.concat(result._id)
-    console.log(user)
     await user.save()
 
-    response.status(201).json(result)
+    return response.status(201).json(result)
   } catch (error) {
-    logger.error(error)
-    response.status(400).end()
+    response.status(400).send(error)
   }
 })
 
-blogsRouter.delete('/:id', async (request, response) => {
+blogsRouter.delete('/:id', middleware.userExtractor, async (request, response, next) => {
   try {
+    const blogToDelete = await Blog.findById(request.params.id)
+    if (!blogToDelete) {
+      return response.status(400).json({ error: 'Blog ID non existing' })
+    }
+    if (!(request.user._id.toString() === blogToDelete.user.toString())) {
+      return response.status(400).json({ error: 'User ID does not match blog user ID' })
+    }
+
     await Blog.findByIdAndRemove(request.params.id)
     response.status(204).end()
   } catch (error) {
-    logger.error(error)
+    next(error)
   }
 })
 
-blogsRouter.put('/:id', async (request, response) => {
+blogsRouter.put('/:id', async (request, response, next) => {
   const blog = {
     title: request.body.title,
     author: request.body.author,
@@ -62,9 +78,9 @@ blogsRouter.put('/:id', async (request, response) => {
   }
   try {
     const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
-    response.json(updatedBlog)
+    return response.json(updatedBlog)
   } catch (error) {
-    logger.error(error)
+    next(error)
   }
 })
 module.exports = blogsRouter

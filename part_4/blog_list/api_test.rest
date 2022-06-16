@@ -11,6 +11,9 @@ content-type: application/json
     "url": "google.com",
     "likes": 15
 }
+###
+DELETE http://localhost:3003/api/blogs/62aa1b8673e545e00d8303a9
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjYyYWEwZDNjZjlmOTA4NDcyMGE5YmFkYyIsImlhdCI6MTY1NTMyNTE3MCwiZXhwIjoxNjU1MzI4NzcwfQ.0RLB1piW4mpibR1dPnSipd519zc-bH9-5OFkXzC60SM
 
 ### USERS
 GET http://localhost:3003/api/users
@@ -20,19 +23,29 @@ POST http://localhost:3003/api/users
 content-type: application/json
 
 {
-    "username": "otrouser",
-    "name": "othername",
-    "password": "otherpassword"
+    "username": "test",
+    "name": "test",
+    "password": "test"
 }
 
-###
+### New blog requires userId
 POST http://localhost:3003/api/blogs
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjYyYWEwZDNjZjlmOTA4NDcyMGE5YmFkYyIsImlhdCI6MTY1NTMyMDg2MSwiZXhwIjoxNjU1MzI0NDYxfQ.kO0RnEm_f1iPGoqBFdb5ncT4NnGarPxDs2MzpmwTokM
+
+{
+    "title": "my new book",
+    "author": "Rock Smith",
+    "url": "url",
+    "likes": 100
+}
+
+
+### Login test
+POST http://localhost:3003/api/login
 content-type: application/json
 
 {
-    "title": "title-1241241",
-    "author": "Hugo Couto",
-    "url": "1234.com",
-    "likes": 25,
-    "userId": "62a912ce55e1692a5e26f7cc" 
+    "username": "test",
+    "password": "test"
 }
