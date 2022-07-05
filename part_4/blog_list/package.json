@@ -7,7 +7,8 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --forceExit",
-    "std:fix": "npx standard --fix"
+    "std:fix": "npx standard --fix",
+    "start:test": "cross-env NODE_ENV=test node index.js"
   },
   "author": "Enzo Bogado",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "mongoose": "^6.3.5"
   },
   "devDependencies": {
+    "eslint-plugin-jest": "^26.5.3",
     "jest": "^28.1.0",
     "nodemon": "^2.0.16",
     "standard": "^17.0.0",
