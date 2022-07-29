@@ -28,28 +28,40 @@ const Country = ({country}) =>{
     })
     },[country])
 
+    const countryStyle = {
+        padding:10,
+        display:'flex',
+        flexDirection:'column',
+        alignItems: 'center'
+    }
+
+    const imgStyle = {
+        maxHeight:'320px',
+        maxWidth: '240px',
+    }
+
     return(
-        <div key={country.name.common}>
-            <h2>
+        <div key={country.name.common} style={countryStyle}>
+            <h2 style={{fontSize:'2.5rem'}}>
                 {country.name.common}
             </h2>
+            <img style={imgStyle} src={country.flags.png} alt='flag'></img>
             <p>
-                capital: {country.capital}
+                <b>capital:</b> {country.capital}
                 <br></br>
-                area: {country.area}
+                <b>area:</b> {country.area}
                 <br></br>
-                country population: {country.population}
+                <b>country population:</b> {country.population}
                 <br></br>
             </p>
             <b>Spoken languages:</b>
             <ul>
                 {Object.values(country.languages).map((lang,i) => <li key={i}>{lang}</li>)}
             </ul>
-            <img src={country.flags.png} alt='flag'></img>
             <h3>Weather in {country.capital}</h3>
-            <img src={"http://openweathermap.org/img/wn/" + weather.weather[0].icon + "@2x.png"} alt=" weather icon"></img>
-            <p>Temperature: {parseFloat(weather.main.temp - 273.15).toPrecision(3)}°C</p>
-            <p>Wind: {weather.wind.speed}</p>
+            <img style={imgStyle} src={"http://openweathermap.org/img/wn/" + weather.weather[0].icon + "@2x.png"} alt=" weather icon"></img>
+            <p style={{padding:'0',margin: 0}}>Temperature: {parseFloat(weather.main.temp - 273.15).toPrecision(3)}°C</p>
+            <p style={{padding:'0',margin: 0}}>Wind: {weather.wind.speed}</p>
         </div>
     )
 }

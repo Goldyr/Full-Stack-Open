@@ -26,13 +26,14 @@ const App = () => {
     setShownCountries(countries.filter(country => country.name.common.toLowerCase().includes(event.target.value.toLowerCase())))
   }
 
+  
   return (
-    <div>
+    <>
         <Filter onChange={filterChangeHandler}/>
         <ul>
           <Countries countries={shownCountries} clickCountryHandler={clickCountryHandler}/>
         </ul>
-    </div>
+    </>
   );
 }
 

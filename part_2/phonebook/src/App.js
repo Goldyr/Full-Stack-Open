@@ -121,12 +121,17 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h2>Phonebook</h2>
+    <div style={
+      {display:'flex',
+      flexDirection:'column',
+      alignItems:'center',
+      padding:10
+      }}>
+      <h2 style={{alignSelf:'center',fontSize:'2rem'}}>Phonebook</h2>
       <Notification message = {notificationUpdate}/>
       <Filter changeHandler={changeFilterHandler}/>
       <PersonForm name={newName} nameHandler={changeNameHandler} number={newNumber} numberHandler={changeNumberHandler} submitHandler={submitHandler}/>
-      <h3>Numbers</h3>
+      <h2 style={{fontSize:'2rem'}}>Numbers</h2>
       <Persons persons = {personsToList} clickHandler={deletePerson}/>
     </div>
   )

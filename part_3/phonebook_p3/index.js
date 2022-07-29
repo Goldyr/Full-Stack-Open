@@ -51,7 +51,7 @@ app.get('/info', (req,res) => {
 app.put('/api/persons/:id', (req,res,next) => {
     const { number } = req.body.number
 
-    Person.findByIdAndUpdate(req.params.id, { number }, { new: true, runValidators:true,context:'query' })
+    Person.findOneAndUpdate(req.params.id, { number }, { new: true, runValidators:true,context:'query' })
         .then(updatedPerson => res.json(updatedPerson))
         .catch(error => next(error))
 })
