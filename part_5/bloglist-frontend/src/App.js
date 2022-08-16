@@ -128,10 +128,11 @@ const App = () => {
     }
 
     const loggedForm = () => (
-        <div>
-            <h2>blogs</h2>
-            <div>User {user.name} logged in </div>
-            <input type="button" onClick={handleLogOut} value="Log Out" id="logout-button"></input>
+        <div style={ { display: 'flex', flexDirection:'column' } }>
+            <h2 style={ { alignSelf:'center', fontSize:'2rem' } }>blogs</h2>
+            <div style={ { alignSelf:'center', fontStyle:'italic', margin:5 } }>User {user.name} logged in
+                <input style={ { margin: 10 } } type="button" onClick={handleLogOut} value="Log Out" id="logout-button"></input>
+            </div>
             <Togglable buttonLabel="create blog" ref={blogFormRef} buttonId="create-button">
                 <BlogForm createBlog={handleCreateBlog}/>
             </Togglable>
@@ -144,7 +145,7 @@ const App = () => {
     )
 
     return (
-        <div>
+        <div >
             <Notification message={notification}></Notification>
 
             <div>

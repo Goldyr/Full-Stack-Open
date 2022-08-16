@@ -6,10 +6,14 @@ const Blog = ({ blog, user, likeButtonHandler, deleteButtonHandler }) => {
     const [blog_state, setBlog] = useState(blog)
 
     const blogStyle = {
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gridTemplateRows: '1fr',
+        placeItems:'center',
         borderStyle: 'solid',
         borderWidth: '2px',
         padding: '10px',
-        margin: '3px'
+        margin: '3px',
     }
 
     const deleteButtonStyle = {
@@ -34,14 +38,18 @@ const Blog = ({ blog, user, likeButtonHandler, deleteButtonHandler }) => {
 
     return(
         <div style={blogStyle} className="Blog">
-            {blog.title} {blog.author}
-            <Togglable buttonLabel = "info">
-                <em><span>Likes {blog_state.likes}</span> <input type="button" value="Like" onClick={likeHandler}></input></em><br/>
-                <em>{blog.url}</em><br/>
-                <em>{blog.author}</em><br/>
-                {user.username === blog.user.username ? <input type="button" value="Remove" onClick={deleteHandler} style={deleteButtonStyle} id="deleteButton"></input> : <input type="button" value="Remove" disabled={true} id="deleteButton"></input>}
-                <br/>
-            </Togglable>
+            <div style={{  }}>
+                {blog.title} by {blog.author}
+            </div>
+            <div style={{ }}>
+                <Togglable buttonLabel = "info">
+                    <em><span>Likes {blog_state.likes}</span> <input type="button" value="Like" onClick={likeHandler}></input></em><br/>
+                    <em>{blog.url}</em><br/>
+                    <em>{blog.author}</em><br/>
+                    {user.username === blog.user.username ? <input type="button" value="Remove" onClick={deleteHandler} style={deleteButtonStyle} id="deleteButton"></input> : <input type="button" value="Remove" disabled={true} id="deleteButton"></input>}
+                    <br/>
+                </Togglable>
+            </div>
         </div>
     )
 }
