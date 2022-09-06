@@ -1,36 +1,55 @@
-import React, { useEffect } from "react";
+import React, { useRef } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getBlogs } from "../reducers/blogsReducer";
+import { Link } from "react-router-dom";
 
-import Blog from "../components/Blog";
+import ListGroup from "react-bootstrap/ListGroup";
 
-const BlogList = ({ user }) => {
+import Togglable from "./Togglable";
+import BlogForm from "./BlogForm";
+
+const BlogList = () => {
   const dispatch = useDispatch();
-  const blogs = useSelector((state) => state.blogs);
+  const blogs = [...useSelector((state) => state.blogs)];
+  const user = useSelector((state) => state.user);
 
-  useEffect(() => {
-    dispatch(getBlogs());
-  }, [dispatch]);
-
-  /*   useEffect(() => {
-    blogs.sort((blog1, blog2) => {
-      if (blog1.likes > blog2.likes) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
-  }, [blogs]); */
+  const blogFormRef = useRef();
 
   if (blogs) {
     return (
       <>
-        {blogs.map((blog) => (
-          <div key={blog.id}>
-            <Blog blog={blog} user={user} />
-          </div>
-        ))}
+        {user ? (
+          <Togglable
+            buttonLabel="create blog"
+            ref={blogFormRef}
+            buttonId="create-button"
+          >
+            <BlogForm />
+          </Togglable>
+        ) : (
+          <div></div>
+        )}
+        <ListGroup>
+          {blogs
+            //Ordered by most liked
+            .sort((blog1, blog2) => {
+              if (blog1.likes > blog2.likes) {
+                return -1;
+              } else {
+                return 1;
+              }
+            })
+            .map((blog) => (
+              <ListGroup.Item key={blog.id} style={{ margin: "5px" }}>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={`/blogs/${blog.id}`}
+                >
+                  {blog.title}
+                </Link>
+              </ListGroup.Item>
+            ))}
+        </ListGroup>
       </>
     );
   } else return <div>no blogs</div>;

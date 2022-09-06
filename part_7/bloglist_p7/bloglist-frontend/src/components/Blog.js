@@ -1,11 +1,13 @@
-import Togglable from "./Togglable";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateBlog, deleteBlog } from "../reducers/blogsReducer";
 
-const Blog = ({ blog, user }) => {
+import { Routes, Route, Link } from "react-router-dom";
+
+const Blog = ({ blog }) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   const [blog_state, setBlog] = useState(blog);
 
@@ -40,37 +42,9 @@ const Blog = ({ blog, user }) => {
   return (
     <div style={blogStyle} className="Blog">
       <div>
-        {blog.title} by {blog.author}
-      </div>
-      <div>
-        <Togglable buttonLabel="info">
-          <em>
-            <span>Likes {blog_state.likes}</span>{" "}
-            <input type="button" value="Like" onClick={likeHandler}></input>
-          </em>
-          <br />
-          <em>{blog.url}</em>
-          <br />
-          <em>{blog.author}</em>
-          <br />
-          {user.id === blog.user.id || user.id === blog.user ? (
-            <input
-              type="button"
-              value="Remove"
-              onClick={deleteHandler}
-              style={deleteButtonStyle}
-              id="deleteButton"
-            ></input>
-          ) : (
-            <input
-              type="button"
-              value="Remove"
-              disabled={true}
-              id="deleteButton"
-            ></input>
-          )}
-          <br />
-        </Togglable>
+        <Link style={{ margin: "5px" }} to={`/blogs/${blog.id}`}>
+          {blog.title}
+        </Link>
       </div>
     </div>
   );
@@ -78,7 +52,6 @@ const Blog = ({ blog, user }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
 };
 
 export default Blog;

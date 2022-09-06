@@ -2,6 +2,9 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogout } from "../reducers/userReducer";
 
+import Navbar from "react-bootstrap/Navbar";
+import Button from "react-bootstrap/Button";
+
 const WelcomeMessage = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -12,15 +15,17 @@ const WelcomeMessage = () => {
   };
 
   return (
-    <div>
+    <Navbar.Text>
       User {user.name} logged in
-      <input
+      <Button
+        variant="secondary"
+        as="input"
         type="button"
         onClick={handleLogOut}
         value="Log Out"
         id="logout-button"
-      ></input>
-    </div>
+      ></Button>
+    </Navbar.Text>
   );
 };
 export default WelcomeMessage;

@@ -3,6 +3,8 @@ import loginService from "../services/login";
 import blogService from "../services/blogs";
 import { handleNotification } from "./notificationReducer";
 
+//Single user used for creation of login and creating of blogs
+
 const userSlice = createSlice({
   name: "user",
   initialState: null,
@@ -27,7 +29,6 @@ export const userLogin = (username, password) => {
       const user = await loginService.login({ username, password });
       window.localStorage.setItem("LoggedUser", JSON.stringify(user));
       blogService.setToken(user.token);
-      console.log(user);
       dispatch(setUser(user));
       dispatch(handleNotification(`Logged user ${user.name} correctly!`, 5));
     } catch (error) {

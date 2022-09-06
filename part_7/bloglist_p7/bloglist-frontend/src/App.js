@@ -1,14 +1,24 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+
 import LoginForm from "./components/LoginForm";
-import BlogForm from "./components/BlogForm";
 import Notification from "./components/Notification";
-import Togglable from "./components/Togglable";
 import BlogList from "./components/BlogList";
 import WelcomeMessage from "./components/WelcomeMessage";
+import Users from "./components/Users";
+import UserInfo from "./components/UserInfo";
+import BlogInfo from "./components/BlogInfo";
+
 import blogService from "./services/blogs";
 
-import { useDispatch, useSelector } from "react-redux";
-import { setUser, userLogout } from "./reducers/userReducer";
+import { setUser } from "./reducers/userReducer";
+import { getUsers } from "./reducers/usersReducer";
+import { getBlogs } from "./reducers/blogsReducer";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -23,29 +33,77 @@ const App = () => {
     }
   }, []);
 
-  const blogFormRef = useRef();
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
 
-  const loggedForm = () => (
-    <div>
-      <h2>blogs</h2>
-      <WelcomeMessage />
-      <Togglable
-        buttonLabel="create blog"
-        ref={blogFormRef}
-        buttonId="create-button"
-      >
-        <BlogForm />
-      </Togglable>
-      <BlogList user={user} />
-    </div>
-  );
+  useEffect(() => {
+    dispatch(getBlogs());
+  }, [dispatch]);
 
   return (
-    <div>
-      <Notification></Notification>
+    <Container>
+      <Router>
+        <Navbar>
+          <Nav className="me-auto">
+            <Nav.Link href="#" as="span">
+              <Link
+                style={{ margin: "5px", textDecoration: "none" }}
+                to="/users"
+              >
+                users
+              </Link>
+            </Nav.Link>
+            <Nav.Link href="#" as="span">
+              <Link
+                style={{ margin: "5px", textDecoration: "none" }}
+                to="/blogs"
+              >
+                blogs
+              </Link>
+            </Nav.Link>
+          </Nav>
+          <Nav>
+            <Nav.Link href="#" as="span">
+              {!user ? (
+                <Link
+                  style={{
+                    margin: "5px",
+                    textDecoration: "none",
+                    fontSize: "1.5rem",
+                  }}
+                  to="/login"
+                >
+                  LOGIN
+                </Link>
+              ) : (
+                <WelcomeMessage />
+              )}
+            </Nav.Link>
+          </Nav>
+        </Navbar>
 
-      <div>{!user ? <LoginForm /> : loggedForm()}</div>
-    </div>
+        <h2>BLOGS</h2>
+        <Notification></Notification>
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                Welcome to my simple blog website, use the navbar on top to
+                navigate the website
+              </div>
+            }
+          />
+          <Route path="/blogs" element={<BlogList />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<UserInfo />}></Route>
+          <Route path="/blogs/:id" element={<BlogInfo />}></Route>
+          <Route path="/login" element={<LoginForm />}></Route>
+        </Routes>
+      </Router>
+    </Container>
   );
 };
 
