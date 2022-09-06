@@ -1,4 +1,3 @@
 # Bloglist FrontEnd
 
-Part 5 Exercise for FullStackOpen, backend at /part_4
-
+Part 7 Exercise for FullStackOpen, backend at /bloglist-backend
