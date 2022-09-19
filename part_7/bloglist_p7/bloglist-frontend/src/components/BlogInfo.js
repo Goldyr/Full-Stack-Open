@@ -11,7 +11,6 @@ const BlogInfo = () => {
   const blog = useSelector((state) =>
     state.blogs.find((blog) => blog.id === id)
   );
-
   const likeHandler = (event) => {
     event.preventDefault();
     const updatedBlog = {
