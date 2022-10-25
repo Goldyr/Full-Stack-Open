@@ -10,6 +10,7 @@
     "graphql": "^16.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-jwt": "^1.1.7",
     "react-scripts": "5.0.0",
     "web-vitals": "^2.1.4"
   },
