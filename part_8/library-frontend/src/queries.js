@@ -78,6 +78,19 @@ export const BOOKS_FILTERED = gql`
   }
 `;
 
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      title
+      author {
+        name
+      }
+      published
+      genres
+    }
+  }
+`;
+
 const queries = {
   ALL_AUTHORS,
   ALL_BOOKS,
@@ -85,5 +98,6 @@ const queries = {
   EDIT_AUTHOR,
   LOGIN,
   BOOKS_FILTERED,
+  BOOK_ADDED,
 };
 export default queries;
