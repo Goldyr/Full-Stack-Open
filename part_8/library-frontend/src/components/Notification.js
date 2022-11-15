@@ -1,10 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { useSubscription } from "@apollo/client";
-import { BOOKS_FILTERED, BOOK_ADDED, ALL_BOOKS } from "../queries";
+import { BOOKS_FILTERED, BOOK_ADDED } from "../queries";
 import { useApolloClient } from "@apollo/client";
 
-//Makes it so that functions wont update cache unnecesaraly
 export const updateCache = (cache, query, addedBook) => {
   const uniqByName = (a) => {
     let seen = new Set();
