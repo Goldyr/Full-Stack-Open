@@ -1,0 +1,15 @@
+#### GET ALL
+GET http://localhost:3001/api/patients
+
+#### ADD ONE
+
+POST http://localhost:3001/api/patients
+content-type: application/json
+
+{
+    "name": "Matt Watson",
+    "dateOfBirth": "1971-12-11",
+    "ssn": "090786-122X",
+    "gender": "male",
+    "occupation": "Scientist"
+}
