@@ -1,18 +1,3 @@
-/* 
-diagnose example
-    code: "M24.2",
-    name: "Disorder of ligament",
-    latin: "Morbositas ligamenti",
-
-patient example
-    id: "d2773598-f723-11e9-8f0b-362b9e155667",
-    name: "Martin Riggs",
-    dateOfBirth: "1979-01-30",
-    ssn: "300179-77A",
-    gender: "male",
-    occupation: "Cop",
- */
-//type Gender = "male" | "female" | "other";
 export enum Gender {
   Male = "male",
   Female = "female",
@@ -32,8 +17,53 @@ export interface Patient {
   ssn?: string;
   gender: Gender;
   occupation: string;
+  entries?: Entry[];
 }
 
-export type PublicPatient = Omit<Patient, "ssn">;
+export type PublicPatient = Omit<Patient, "ssn" | "entries">;
 
 export type NewPatient = Omit<Patient, "id">;
+
+interface BaseEntry {
+  id: string;
+  description: string;
+  date: string;
+  specialist: string;
+  diagnosisCodes?: Array<Diagnose["code"]>;
+}
+
+export enum healthCheckRating {
+  "Healty" = 0,
+  "LowRisk" = 1,
+  "HighRisk" = 2,
+  "CriticalRisk" = 3,
+}
+
+interface HealthCheckEntry extends BaseEntry {
+  type: "HealthCheck";
+  healthCheckRating: healthCheckRating;
+}
+
+interface OccupationalHealthcareEntry extends BaseEntry {
+  type: "OccupationalHealthcare";
+  employerName: string;
+  sickLeave?: {
+    startDate: string;
+    endDate?: string;
+  };
+}
+
+interface HospitalEntry extends BaseEntry {
+  type: "Hospital";
+  discharge: {
+    date: string;
+    criteria: string;
+  };
+}
+
+export type Entry =
+  | HospitalEntry
+  | OccupationalHealthcareEntry
+  | HealthCheckEntry;
+
+export type NewEntry = Omit<Entry, "id">

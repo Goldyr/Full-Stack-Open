@@ -1,6 +1,10 @@
 #### GET ALL
 GET http://localhost:3001/api/patients
 
+### GET ONE
+
+GET http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667
+
 #### ADD ONE
 
 POST http://localhost:3001/api/patients
@@ -12,4 +16,30 @@ content-type: application/json
     "ssn": "090786-122X",
     "gender": "male",
     "occupation": "Scientist"
+}
+
+### ENTRIES TESTING
+
+POST http://localhost:3001/api/patients/d2773598-f723-11e9-8f0b-362b9e155667/entries
+content-type: application/json
+
+{
+    "date": "2019-10-20",
+    "specialist": "specialist",
+    "type": "HealthCheck",
+    "description": "description",
+    "healthCheckRating": 0
+}
+
+### ENTRIES TESTING
+
+POST http://localhost:3001/api/patients/d2773598-f723-11e9-8f0b-362b9e155667/entries
+content-type: application/json
+
+{
+    "date": "2019-09-10",
+    "specialist": "MD House",
+    "type": "OccupationalHealthcare",
+    "employerName": "FBI",
+    "description": "Prescriptions renewed."
 }

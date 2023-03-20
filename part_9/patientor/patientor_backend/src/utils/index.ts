@@ -1,4 +1,4 @@
-import { Gender, NewPatient } from "../types";
+import { Diagnose, Entry, Gender, healthCheckRating, NewPatient } from "../types";
 
 const isString = (text: unknown): text is string => {
   return typeof text === "string" || text instanceof String;
@@ -7,7 +7,7 @@ const isString = (text: unknown): text is string => {
 //Works for checking name/occupation
 const parseSimpleString = (param: unknown): string => {
   if (!param || !isString(param))
-    throw new Error("Incorrect or missing name/occupation");
+    throw new Error("Incorrect or missing string");
   return param;
 };
 
@@ -50,8 +50,56 @@ export const toNewPatient = (object: any): NewPatient => {
     ssn: parseSsn(object.ssn),
     gender: parseGender(object.gender),
     occupation: parseSimpleString(object.occupation),
+    entries: object.entries as Entry[],
   };
   return newPatient;
 };
 
-export default toNewPatient;
+export const toNewEntry = (object: any): Entry => {
+  
+  switch(object.type){
+    case "HealthCheck":
+    const newEntryHC: Entry = {
+      id: parseSimpleString(object.id),
+      description: parseSimpleString(object.description),
+      date: parseSimpleString(object.date),
+      specialist: parseSimpleString(object.specialist),
+      diagnosisCodes: object.diagnosisCodes as Array<Diagnose["code"]>,
+      type: "HealthCheck",
+      healthCheckRating: object.healthCheckRating as healthCheckRating
+    }
+    return newEntryHC
+
+    case "OccupationalHealthcare":
+      const newEntryOH: Entry = {
+        id: parseSimpleString(object.id),
+        description: parseSimpleString(object.description),
+        date: parseSimpleString(object.date),
+        specialist: parseSimpleString(object.specialist),
+        diagnosisCodes: object.diagnosisCodes as Array<Diagnose["code"]>,
+        type: "OccupationalHealthcare",
+        employerName: parseSimpleString(object.employerName),
+        sickLeave: object.sickLeave,
+      }
+    return newEntryOH
+
+    case "Hospital":
+      const newEntryH: Entry = {
+        id: parseSimpleString(object.id),
+        description: parseSimpleString(object.description),
+        date: parseSimpleString(object.date),
+        specialist: parseSimpleString(object.specialist),
+        diagnosisCodes: object.diagnosisCodes as Array<Diagnose["code"]>,
+        type: "Hospital",
+        discharge: object.discharge,
+      }
+    return newEntryH
+
+    default:
+      throw new Error("Error parsing entry: " + JSON.stringify(object));
+
+    }
+    
+};
+
+export default {toNewPatient, toNewEntry};
